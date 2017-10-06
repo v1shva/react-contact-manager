@@ -2,8 +2,8 @@
 
 import React, { Component} from 'react';
 import { connect } from 'react-redux';
-import ContactList from '../components/contact-list';
-import { fetchContacts, deleteContact } from '../actions/contact-actions';
+import ContactList from '../../components/contact/list';
+import { fetchContacts, deleteContact } from '../../actions/contact-actions';
 
 class ContactListPage extends Component {
 

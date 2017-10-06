@@ -3,11 +3,11 @@ import React, { Component} from 'react';
 import { Redirect } from 'react-router-dom';
 import { SubmissionError } from 'redux-form';
 import { connect } from 'react-redux';
-import { newContact, saveContact, fetchContact, updateContact } from '../actions/contact-actions';
-import ContactForm from '../components/contact-form';
+import { newUser, saveUser, fetchUser, updateUser } from '../../actions/user-actions';
+import UserForm from '../../components/user/form';
 
 
-class ContactFormPage extends Component {
+class UserFormPage extends Component {
 
     state = {
         redirect: false
@@ -16,21 +16,21 @@ class ContactFormPage extends Component {
     componentDidMount = () => {
         const { _id } = this.props.match.params;
         if(_id){
-            this.props.fetchContact(_id)
+            this.props.fetchUser(_id)
         } else {
-            this.props.newContact();
+            this.props.newUser();
         }
     };
 
-    submit = (contact) => {
-        if(!contact._id) {
-            return this.props.saveContact(contact)
+    submit = (user) => {
+        if(!user._id) {
+            return this.props.saveUser(user)
                 .then(response => this.setState({ redirect:true }))
                 .catch(err => {
                     throw new SubmissionError(this.props.errors)
                 })
         } else {
-            return this.props.updateContact(contact)
+            return this.props.updateUser(user)
                 .then(response => this.setState({ redirect:true }))
                 .catch(err => {
                     throw new SubmissionError(this.props.errors)
@@ -44,7 +44,7 @@ class ContactFormPage extends Component {
                 {
                     this.state.redirect ?
                         <Redirect to="/" /> :
-                        <ContactForm contact={this.props.contact} loading={this.props.loading} onSubmit={this.submit} />
+                        <UserForm user={this.props.user} loading={this.props.loading} onSubmit={this.submit} />
                 }
             </div>
         )
@@ -53,9 +53,9 @@ class ContactFormPage extends Component {
 
 function mapStateToProps(state) {
     return {
-        contact: state.contactStore.contact,
-        errors: state.contactStore.errors
+        user: state.userStore.user,
+        errors: state.userStore.errors
     }
 }
 
-export default connect(mapStateToProps, {newContact, saveContact, fetchContact, updateContact})(ContactFormPage);
+export default connect(mapStateToProps, {newUser, saveUser, fetchUser, updateUser})(UserFormPage);

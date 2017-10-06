@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card } from 'semantic-ui-react';
-import ContactCard from './contact-card';
+import ContactCard from './card';
 
 export default function ContactList({contacts, deleteContact}){
     const cards = () => {
