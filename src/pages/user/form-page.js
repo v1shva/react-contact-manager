@@ -23,15 +23,21 @@ class UserFormPage extends Component {
     };
 
     submit = (user) => {
+
         if(!user._id) {
             return this.props.saveUser(user)
-                .then(response => this.setState({ redirect:true }))
+                .then(response => {
+                    console.log(response);
+                    this.setState({ redirect:true })
+                })
                 .catch(err => {
                     throw new SubmissionError(this.props.errors)
                 })
         } else {
             return this.props.updateUser(user)
-                .then(response => this.setState({ redirect:true }))
+                .then(response => {
+                    this.setState({ redirect:true })
+                })
                 .catch(err => {
                     throw new SubmissionError(this.props.errors)
                 })
@@ -43,8 +49,8 @@ class UserFormPage extends Component {
             <div>
                 {
                     this.state.redirect ?
-                        <Redirect to="/" /> :
-                        <UserForm user={this.props.user} loading={this.props.loading} onSubmit={this.submit} />
+                        (<Redirect to="/login" /> ):
+                        (<UserForm user={this.props.user} loading={this.props.loading} onSubmit={this.submit} />)
                 }
             </div>
         )

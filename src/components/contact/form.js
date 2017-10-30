@@ -23,7 +23,7 @@ class ContactForm extends Component {
         const { handleSubmit, pristine, submitting, loading } = this.props;
 
         return (
-            <Grid centered columns={1}>
+            <Grid columns={1}>
                 <Grid.Column>
                     <h1 style={{marginTop:"1em"}}>{this.props.contact._id ? 'Edit Contact' : 'Add New Contact'}</h1>
                     <Form onSubmit={handleSubmit} loading={loading}>

@@ -13,7 +13,7 @@ module.exports = function (app) {
     },
     employeeNo : {
       type: String,
-      unique: true,
+      unique: [true, 'This no is already registered'],
       required: [true, 'Employee No is required']
     },
 

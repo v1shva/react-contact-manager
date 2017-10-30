@@ -13,13 +13,14 @@ class UserFormPage extends Component {
         redirect: false
     };
 
-    componentDidMount = () => {
-        this.props.authenticateUser();
-    };
+
 
     submit = (user) => {
         return this.props.authenticateUser(user)
-            .then(response => this.setState({ redirect:true }))
+            .then(response => {
+                console.log('here'+response);
+                this.setState({ redirect:true })
+            })
             .catch(err => {
                 throw new SubmissionError(this.props.errors)
             })
@@ -30,8 +31,8 @@ class UserFormPage extends Component {
             <div>
                 {
                     this.state.redirect ?
-                        <Redirect to="/" /> :
-                        <LoginForm user={this.props.user} loading={this.props.loading} onSubmit={this.submit} />
+                        (<Redirect to="/" />) :
+                        (<LoginForm user={this.props.user} loading={this.props.loading} onSubmit={this.submit} />)
                 }
             </div>
         )

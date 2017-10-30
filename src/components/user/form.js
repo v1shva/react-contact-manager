@@ -23,10 +23,9 @@ class UserForm extends Component {
         const { handleSubmit, pristine, submitting, loading } = this.props;
 
         return (
-
                 <Grid.Column >
                     <h1 style={{marginTop:"1em"}}>{this.props.user._id ? 'Edit My Account' : 'Register'}</h1>
-                    <Form onSubmit={handleSubmit} loading={loading}>
+                    <Form className="ui form" onSubmit={handleSubmit} loading={loading}>
                         <Field name="email" type="text" component={this.renderField} label="Email"/>
                         <Field name="employeeNo" type="text" component={this.renderField} label="Employee No"/>
                         <Field name="password" type="password" component={this.renderField} label="Password"/>
@@ -38,40 +37,5 @@ class UserForm extends Component {
         )
     }
 }
-const validate = (values) => {
-    const errors = {name:{}};
-    if(!values.email) {
-        errors.email = {
-            message: 'You need to provide an Email address'
-        }
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = {
-            message: 'Invalid email address'
-        }
-    }
-    if(!values.employeeNo ) {
-        errors.employeeNo = {
-            message: 'You need to provide Employee No'
-        }
-    }
-    if(!values.password) {
-        errors.password = {
-            message: 'You need to provide a Password'
-        }
-    }
-    if(!values.confirmPassword) {
-        errors.confirmPassword = {
-            message: 'You need to confirm Password'
-        }
-    }else if(values.confirmPassword !== values.password){
-        errors.password = {
-            message: 'Passwords doesn\'t match'
-        },
-        errors.confirmPassword = {
-            message: 'Passwords doesn\'t match'
-        }
-    }
-    return errors;
-}
 
-export default reduxForm({form: 'user', validate})(UserForm);
+export default reduxForm({form: 'user'})(UserForm);
