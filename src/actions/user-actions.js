@@ -2,12 +2,11 @@ import { client } from './';
 
 const url = '/users';
 
-export function authenticateUser({ email, password }, history) {
+export function authenticateUser({ email, password }) {
     return  dispatch => {
         return dispatch({
             type: 'AUTHENTICATE_USER',
             payload: client.post('/authentication', { "strategy": "local", email, password }),
-            history: history
         })
     }
 }

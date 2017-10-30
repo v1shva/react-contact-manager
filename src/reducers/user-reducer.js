@@ -20,9 +20,9 @@ export default (state=defaultState, action={}) => {
             return { ...state, authenticated: false, errors: errors, loading: false };
         }
         case 'AUTHENTICATE_USER_FULFILLED': {
-            var res = action.payload.response;
+            var res = action.payload;
+            console.log(res);
             localStorage.setItem('user', res.data.accessToken);
-            action.history.push('/secret');
             return {
                 ...state,
                 authenticated: true,
