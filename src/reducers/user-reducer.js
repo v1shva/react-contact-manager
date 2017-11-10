@@ -3,6 +3,7 @@
 const defaultState = {
     users: [],
     user: {email:{}},
+    authenticated: false,
     loading: false,
     errors: {}
 }
@@ -21,11 +22,38 @@ export default (state=defaultState, action={}) => {
         }
         case 'AUTHENTICATE_USER_FULFILLED': {
             var res = action.payload;
-            console.log(res);
             localStorage.setItem('user', res.data.accessToken);
             return {
                 ...state,
                 authenticated: true,
+                errors: {},
+                loading: false
+            }
+        }
+        case 'AUTHENTICATE_WITH_COOKIE': {
+            console.log(action);
+            if(action.payload){
+                return {
+                    ...state,
+                    authenticated: true,
+                    errors: {},
+                    loading: false
+                }
+            }
+            else{
+                return {
+                    ...state,
+                    authenticated: false,
+                    errors: {},
+                    loading: false
+                }
+            }
+        }
+        case 'LOGOUT_USER': {
+            localStorage.removeItem('user');
+            return {
+                ...state,
+                authenticated: false,
                 errors: {},
                 loading: false
             }
@@ -67,12 +95,15 @@ export default (state=defaultState, action={}) => {
 
         case 'SAVE_USER_REJECTED': {
             const data = action.payload.response.data;
+            console.log(data);
             // convert feathers error formatting to match client-side error formatting
-            let { email,employeeNo, password } = data.errors;
+            let { name,email,employeeNo, password } = data.errors;
             var i = data.message.indexOf(':');
             var message = data.message.slice(i);
+            if(name && typeof name !== 'object'){
+                name = {message: "\"Name"+message}
+            }
             if(email && typeof email !== 'object'){
-                var i = data.message.indexOf(':');
                 email = {message: "\"Email"+message}
             }
             if(employeeNo && typeof employeeNo !== 'object'){
@@ -81,7 +112,7 @@ export default (state=defaultState, action={}) => {
             if(password && typeof password !== 'object'){
                 password = {message: "\"Password"+message}
             }
-            const errors = { global: data.message, email, employeeNo, password };
+            const errors = { global: data.message, name,email, employeeNo, password };
             return {
                 ...state,
                 errors: errors,

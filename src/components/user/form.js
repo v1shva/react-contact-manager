@@ -26,6 +26,7 @@ class UserForm extends Component {
                 <Grid.Column >
                     <h1 style={{marginTop:"1em"}}>{this.props.user._id ? 'Edit My Account' : 'Register'}</h1>
                     <Form className="ui form" onSubmit={handleSubmit} loading={loading}>
+                        <Field name="name" type="text" component={this.renderField} label="Name"/>
                         <Field name="email" type="text" component={this.renderField} label="Email"/>
                         <Field name="employeeNo" type="text" component={this.renderField} label="Employee No"/>
                         <Field name="password" type="password" component={this.renderField} label="Password"/>
@@ -38,4 +39,12 @@ class UserForm extends Component {
     }
 }
 
-export default reduxForm({form: 'user'})(UserForm);
+export default reduxForm({form: 'user',validate})(UserForm);
+
+function validate(values) {
+    const errors = {};
+    if (values.confirmPassword && values.confirmPassword !== values.password) {
+        errors.confirmPassword = {message :"Passwords doesn't match"}
+    }
+    return errors;
+}

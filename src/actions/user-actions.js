@@ -11,6 +11,15 @@ export function authenticateUser({ email, password }) {
     }
 }
 
+export function authenticateUserWithCookie(user = false){
+    return dispatch => {
+        dispatch({
+            type: 'AUTHENTICATE_WITH_COOKIE',
+            payload: user
+        })
+    }
+}
+
 export function logoutUser(){
     return dispatch => {
         dispatch({

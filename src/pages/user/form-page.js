@@ -8,10 +8,14 @@ import UserForm from '../../components/user/form';
 
 
 class UserFormPage extends Component {
+    constructor() {
+        super();
+        this.state = {
+            redirect: false
+        };
 
-    state = {
-        redirect: false
-    };
+    }
+
 
     componentDidMount = () => {
         const { _id } = this.props.match.params;
@@ -31,7 +35,7 @@ class UserFormPage extends Component {
                     this.setState({ redirect:true })
                 })
                 .catch(err => {
-                    throw new SubmissionError(this.props.errors)
+                    throw new SubmissionError(this.props.errors);
                 })
         } else {
             return this.props.updateUser(user)

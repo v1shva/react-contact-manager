@@ -6,6 +6,10 @@ require('mongoose-type-email');
 module.exports = function (app) {
   const mongooseClient = app.get('mongooseClient');
   const users = new mongooseClient.Schema({
+    name : {
+      type: String,
+      required: [true, 'Name is required']
+    },
     email : {
       type: mongooseClient.SchemaTypes.Email,
       unique: true,

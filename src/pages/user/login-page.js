@@ -7,11 +7,14 @@ import { authenticateUser } from '../../actions/user-actions';
 import LoginForm from '../../components/user/login';
 
 
-class UserFormPage extends Component {
+class LoginPage extends Component {
+    constructor(props) {
+        super();
+        this.state = {
+            redirect: props.authenticated
+        };
+    }
 
-    state = {
-        redirect: false
-    };
 
 
 
@@ -19,7 +22,8 @@ class UserFormPage extends Component {
         return this.props.authenticateUser(user)
             .then(response => {
                 console.log('here'+response);
-                this.setState({ redirect:true })
+                this.setState({ redirect:true });
+                console.log(this.props);
             })
             .catch(err => {
                 throw new SubmissionError(this.props.errors)
@@ -41,9 +45,10 @@ class UserFormPage extends Component {
 
 function mapStateToProps(state) {
     return {
+        authenticated: state.userStore.authenticated,
         user: state.userStore.user,
         errors: state.userStore.errors
     }
 }
 
-export default connect(mapStateToProps, {authenticateUser})(UserFormPage);
+export default connect(mapStateToProps, {authenticateUser})(LoginPage);
