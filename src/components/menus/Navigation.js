@@ -10,9 +10,12 @@ export default function Navigation({authenticated,handleLogOut,user}) {
                 <div className="item">
                     <h3>Bakery</h3>
                 </div>
-                <div className="item">
-                    <h3></h3>
-                </div>
+                <NavLink className="item" activeClassName="active" exact to="/items">
+                    I want to eat
+                </NavLink>
+                <NavLink className="item" activeClassName="active" exact to="/items/add">
+                    Add new thing to eat
+                </NavLink>
                 <NavLink onClick={handleLogOut} className="item" activeClassName="active" exact to="/login">
                     Log Out
                 </NavLink>

@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import {Route, Switch} from 'react-router-dom';
 import LoginPage from './pages/user/login-page';
 import UserFormPage from './pages/user/form-page';
+import ItemListPage from './pages/item/list-page';
+import ItemFormPage from './pages/item/form-page';
 import {PrivateRoute} from './routes/private';
 import HomePage from './pages/home-page';
 import NotFoundPage from './pages/not-found-page';
@@ -28,6 +30,8 @@ class App extends Component {
                     <PrivateRoute authenticated={this.props.authenticated} exact path="/" component={HomePage}/>
                     <Route path="/register" component={UserFormPage}/>
                     <Route path="/login" component={LoginPage}/>
+                    <PrivateRoute authenticated={this.props.authenticated} exact path="/items" component={ItemListPage} />
+                    <PrivateRoute authenticated={this.props.authenticated} exact path="/items/add" component={ItemFormPage} />
                     <Route path="/*" component={NotFoundPage}/>
                 </Switch>
             </div>
