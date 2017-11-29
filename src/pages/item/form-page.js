@@ -24,6 +24,9 @@ class ItemFormPage extends Component {
 
     submit = (item) => {
         if(!item._id) {
+            if(item.picture){
+                item.picture = item.picture[0];
+            }
             return this.props.saveItem(item)
                 .then(response => this.setState({ redirect:true }))
                 .catch(err => {

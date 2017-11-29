@@ -10,6 +10,10 @@ module.exports = function (app) {
       type: String,
       required: [true, 'Name is required']
     },
+    picture : {
+      type: String,
+      required: [true, 'Picture is required']
+    },
     price : {
       type: Number,
       required: [true, 'Price is required']

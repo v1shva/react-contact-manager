@@ -3,6 +3,9 @@ const createService = require('feathers-mongoose');
 const createModel = require('../../models/items.model');
 const hooks = require('./items.hooks');
 const filters = require('./items.filters');
+const multer = require('multer');
+const multipartMiddleware = multer({dest:'/public/items/pictures/'});
+
 
 module.exports = function () {
   const app = this;
@@ -16,7 +19,20 @@ module.exports = function () {
   };
 
   // Initialize our service with any options it requires
-  app.use('/items', createService(options));
+  app.use('/items',
+    function(req, res, next){
+      console.log(req);
+      next();
+    },
+
+    function(req, res, next){
+    console.log(req);
+      if(req.body && req.file){
+        req.body.picture = req.file.filename;
+      }
+      next();
+    },
+    createService(options));
 
   // Get our initialized service so that we can register hooks and filters
   const service = app.service('items');

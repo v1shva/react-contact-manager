@@ -21,9 +21,13 @@ export function newItem() {
 
 export function saveItem(item) {
     return dispatch => {
+        const formData = new FormData();
+        formData.append('name',item.name);
+        formData.append("picture",item.picture);
+        formData.append('price',item.price);
         return dispatch({
             type: 'SAVE_ITEM',
-            payload: client.post(url, item)
+            payload: client.post(url, formData, {headers:{'Content-Type': 'multipart/form-data'}})
         })
     }
 }

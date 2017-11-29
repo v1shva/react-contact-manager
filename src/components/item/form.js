@@ -5,14 +5,21 @@ import classnames from 'classnames';
 
 class ItemForm extends Component {
 
+
     renderField = ({ input, label, type, meta: { touched, error } }) => (
         <Form.Field className={classnames({error:touched && error})}>
             <label>{label}</label>
             <input {...input} placeholder={label} type={type}/>
             {touched && error && <span className="error">{error.message}</span>}
         </Form.Field>
-    )
-
+    );
+    UploadFile = ({ input: {value: omitValue, ...inputProps },label,type, meta: {omitMeta,touched, error}, ...props }) => (
+        <Form.Field className={classnames({error:touched && error})}>
+            <label>{label}</label>
+            <input type='file' {...inputProps} {...props} />
+            {touched && error && <span className="error">{error.message}</span>}
+        </Form.Field>
+    );
     render() {
         const { handleSubmit, pristine, submitting, loading } = this.props;
 
@@ -22,6 +29,7 @@ class ItemForm extends Component {
                     <h1 style={{marginTop:"1em"}}>{this.props.item._id ? 'Edit Item' : 'Add New Item'}</h1>
                     <Form onSubmit={handleSubmit} loading={loading}>
                         <Field name="name" type="text" component={this.renderField} label="Name"/>
+                        <Field component={this.UploadFile} name='picture' accept='.jpg' label="Picture" />
                         <Field name="price" type="text" component={this.renderField} label="Price"/>
                         <Button primary type='submit' disabled={pristine || submitting}>Save</Button>
                     </Form>
@@ -51,3 +59,4 @@ const validate = (values) => {
 }
 
 export default reduxForm({form: 'item', validate})(ItemForm);
+

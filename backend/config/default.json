@@ -30,5 +30,6 @@
       "usernameField": "email",
       "passwordField": "password"
     }
-  }
+  },
+  "mysql": "mysql://root:@localhost:3306/backend"
 }

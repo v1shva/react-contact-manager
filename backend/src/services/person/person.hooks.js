@@ -1,13 +1,12 @@
-const { authenticate } = require('feathers-authentication').hooks;
-const fileUpload = require('../../hooks/file-upload').hooks;
+
 
 module.exports = {
   before: {
-    all: [ authenticate('jwt') ,fileUpload],
+    all: [],
     find: [],
     get: [],
     create: [],
-    update: [fileUpload],
+    update: [],
     patch: [],
     remove: []
   },
